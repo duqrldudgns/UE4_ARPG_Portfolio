@@ -1,0 +1,258 @@
+----
+
+- 메인메뉴
+
+메인메뉴 및 인트로 시네마 설명
+
+
+- 기본 동작
+
+달리기 , energy bar 설명
+
+더블 점프
+
+대쉬 설명 (고스트 테일)
+
+발바닥 소리, 파티클
+
+IK 설명
+
+
+- 활 기본 동작?
+
+장비 시 스킬창 활성화
+
+aim시에 줌인 , 에임 생성
+
+draw시 줌인 , 에임 축소
+
+화살은 projectile 형태로 날아감
+
+draw 하는 시간에 따라서 화살 속도 달라짐
+
+큰 원 내에서 랜덤한 방향으로 나아감
+
+화살은 pickup 가능한 형태로 남음
+
+활을 쏠 때 장애물 있을 시 ui 생성
+
+quiver 화살 숫자 줄어들고 0개되면 못쏨
+
+화살 다시 주워서 쓸 수 있고 quiver 숫자 늘어감
+
+화살이 닿을때 파티클 다름
+
+
+- 활, 적과의 상호작용
+
+health 바 생성
+
+데미지 ui 생성
+
+draw 시간에 따라 화살 데미지도 달라짐
+
+머리에 맞출 경우 데미지 증가
+
+화살이 박힘
+
+화살 박힌곳에 데칼 생성
+
+마찬가지로 화살 다시 주울 수 있음
+
+때린 방향에 따라서 적의 hit 모션 달라짐
+
+
+-활
+
+(적진으로 감)
+
+(벽에)스킬 활성화하면 이펙트생성 및 발사할때 화살 색 변경
+
+적 탐지 스킬
+
+화살추가
+
+폭발물
+
+지속 데미지 
+
+연쇄폭발물
+
+아이스 스킬
+
+rain 스킬
+
+점프 드로우 시 속도 늦춰짐
+
+
+- 검
+
+장착시 스킬 활성화
+
+검을 휘두를 때 tail 생성
+
+공격 도중 추가 입력 시 추가동작(콤보 기능)
+
+적 히트 시 카메라 쉐이크
+
+동작 마다의 damagetype을 통해 피해입는 모션 다르게 함
+
+대쉬 어택, 어퍼 어택
+
+어퍼어택으로 공중공격으로 이어지는 콤보 공격
+
+동작 중 대쉬로 연결동작 중지 가능
+
+분신 스킬
+
+블랙홀 스킬
+
+레이저 스킬
+
+파이어볼 스킬
+
+가드 기능
+
+가드 시 뒤에서 맞을 경우 피해 입음
+
+Rock On Target 기능
+
+대쉬 시 통과 및 공격 회피
+
+
+-적
+
+기본적으로 순찰하다가 적을 발견하면 이속증가 모션 변경
+
+일정시간 공격 딜레이
+
+다양한 공격 패턴
+
+
+- 기타
+
+점프맵 
+
+폭탄, 힐링 포션
+
+스위치 밟으면 문열림
+
+이후 통로 에 들어가면 보스필드 입장
+
+
+- 보스 필드
+
+보스 로딩화면 및 인트로 
+
+보스 바 생성
+
+
+거리가 멀때 쓰는 스킬 2개
+
+가까울 떄 쓰는 스킬 2개
+
+보스는 기본적으로 스킬 도중 피해를 입어도 중간에 끊기지않음
+
+
+-------
+
+
+
+
+
+- 가드 시 뒷 공격은 받음, 맞는 방향에 따른 모션 
+applypointdamage, hitfromdirection
+
+- 타격시 속도감 제어
+animmontage play rate 재생속도 변경
+
+- 타격감
+카메라 쉐이크
+
+- 몽타주 재생 중 몰입감
+PostProcess와 Meterial의 Depth, SceneTexture를 사용
+
+- 순간이동하는 대쉬 공격
+MoveComponentTo로 플레이어가 지나간 자리의 적들을 Trace로 찾아 데미지 
+
+-포탈 생성 및 이동
+포탈 생성 위치는 마우스 포인터 위치 - GetHitResultUnderCursorForObject
+
+-광역 기술
+가운데로 끌어들여 몇초후 폭발
+
+-차징
+//float fTimerElapsed = GetWorldTimerManager().GetTimerElapsed(TimerHandle);	//경과 시간 반환
+//UE_LOG(LogTemp, Warning, TEXT("%f"), fTimerElapsed);
+
+-물체 밀기
+
+
+- 활 조준 시 시점이 당겨지고 CrossHair 와 투사체의 방향이 일치하도록
+
+-화살이 포물선궤적
+Tick에서 화살의 Velocity와 회전을 Lerp
+
+- 화살에 맞을 시 (헤드샷)
+맞은 위치와 Skeletal Mesh의 가장 가까운 Socket Bone에 화살을 Attack 
+
+- 화약통 화살과 충돌시 폭발
+Trigger 로 DestructibeMesh에 Impulse를 가하는 방식
+
+- 주변에 폭발물이 있다면
+Trace로 찾고 일정시간 Delay 후 연쇄로 폭발하도록
+
+- 활 스킬 시 또는 점프 후 활 공격 시 
+게임시간 흐름 제어 global time dilation , Custom time dilation
+느려진동안 공격키를 눌러 표시한 방향을 배열에 집어넣고 , 제어가 끝나면 발사하도록
+
+
+
+- 파쿠르
+액터 컴포넌트에 의해 동작
+모든 동작은 기본적으로 Trace를 통해 이루어짐, 미리부착된 Ledge 액터와의 상호작용
+
+
+AI
+대기 or 순찰 중 플레이어 감지
+- AI Perception의 Sight 감지, 무기를 꺼내고 BehaviorTree에 의한 동작이 실행
+
+Idle 상태 일 때 플레이어의 주변을 맴도는 움직임
+- EnvQuery로 구현
+
+전방에 있을 시 쿨타임 없이 공격, 후방에서는 바로 공격
+
+
+보스
+
+보스필드에 들어섰을 때 Trigger가 작동하여 시네마틱 재생
+https://mingyu0403.tistory.com/212?category=916231
+
+돌진 중에 MovementMode 상태를 Fly상태로 바꾸고 MoveComponentTo 함수를 사용해서 이동
+
+
+
+-구역마다 발스텝에 맞춰 파티클
+niagara system
+
+- IK
+발바닥
+
+
+맵
+
+보스맵
+- EnvironmentPack2 원형경기장 크기 키워서
+
+
+보스가 스킬쓰면 암흑시야 갖게끔
+
+
+ 활 장애물 있을 시 x 표시 - 카메라가 보는 actor 랑 화살이 나오는 곳에서 trace를 통해 보는 actor 가 다를 경우 해당 위치에 x표시
+-----------------
+
+clear
+
+- 구역마다 발소리
+Physical Material 기반으로 구현 Line Trace로 Surface Type
+			hitResult.PhysMaterial
